@@ -1,0 +1,17 @@
+bin/Debug/netcoreapp2.0/binseatreecs.dll
+bin/Debug/netcoreapp2.0/binseatreecs.pdb
+bin/Debug/netcoreapp2.0/binseatreecs.deps.json
+bin/Debug/netcoreapp2.0/binseatreecs.runtimeconfig.json
+bin/Debug/netcoreapp2.0/binseatreecs.runtimeconfig.dev.json
+obj/binseatreecs.csproj.nuget.cache
+obj/binseatreecs.csproj.nuget.g.props
+obj/binseatreecs.csproj.nuget.g.targets
+obj/project.assets.json
+obj/Debug/netcoreapp2.0/binseatreecs.dll
+obj/Debug/netcoreapp2.0/binseatreecs.pdb
+obj/Debug/netcoreapp2.0/binseatreecs.AssemblyInfo.cs
+obj/Debug/netcoreapp2.0/binseatreecs.AssemblyInfoInputs.cache
+obj/Debug/netcoreapp2.0/binseatreecs.csproj.CoreCompileInputs.cache
+obj/Debug/netcoreapp2.0/binseatreecs.csproj.FileListAbsolute.txt
+obj/Debug/netcoreapp2.0/binseatreecs.csprojAssemblyReference.cache
+obj/Debug/netcoreapp2.0/project.razor.json
