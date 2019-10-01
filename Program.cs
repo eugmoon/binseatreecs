@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
 
 namespace binsearchtree
 {
@@ -75,8 +73,6 @@ namespace binsearchtree
             Console.WriteLine("\nOutput binary search tree: testTree");
             printBinTree(testTree);
             Console.WriteLine("Done!\n");
-            
-            BuildWebHost(args).Run();
         }
 
         static public Node insert(Node treeNode, int value) {
@@ -332,10 +328,5 @@ namespace binsearchtree
                 Console.WriteLine("{0}", value);
             }
         }
-
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
     }
 }
