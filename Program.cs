@@ -88,7 +88,7 @@ namespace binsearchtree
                     currentNode.right = insert(currentNode.right, value);
                 }
                 else {      // value == currentNode.value
-                    Console.WriteLine("Error: Did not insert {0}, already present in tree\n", newValue);
+                    Console.WriteLine("Error: Did not insert {0}, already present in tree\n", value);
                 }
             }
             else {      // treeNode == null
