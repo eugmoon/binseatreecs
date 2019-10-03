@@ -1,0 +1,2 @@
+wwwroot/* linguist-vendored
+*.cs linguist-detectable=true
