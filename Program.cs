@@ -30,14 +30,15 @@ namespace binsearchtree
             root = insert(root, 14);
             root = insert(root, 22);    // insert repeated
 
+            string order = "pre";
             Console.WriteLine("\nOutput binary search tree: root");
-            printBinTree(root);
+            recurseBinTree(root, order);
             Console.WriteLine("Done!\n");
 
             root = delete(root, 20);
 
             Console.WriteLine("\nOutput binary search tree: root");
-            printBinTree(root);
+            recurseBinTree(root, order);
             Console.WriteLine("Done!\n");
 
             if (findTreeNode(root, 29) != null) {
@@ -71,7 +72,7 @@ namespace binsearchtree
 
             Node testTree = deserialize(testList);
             Console.WriteLine("\nOutput binary search tree: testTree");
-            printBinTree(testTree);
+            recurseBinTree(root, order);
             Console.WriteLine("Done!\n");
         }
 
@@ -98,11 +99,106 @@ namespace binsearchtree
             return currentNode;
         }
 
-        static public void printBinTree(Node treeNode) {
+        static public void iterateInBinTree(Node treeNode) {
+            Stack<Node> stack = new Stack<Node>();
+            Node currNode = null;
+
+            if (treeNode != null)
+                currNode = treeNode;
+
+            do {
+                while (currNode != null) {
+                    stack.Push(currNode);
+                    if (currNode.left == null)
+                        Console.WriteLine("N");
+                    currNode = currNode.left;
+                }
+
+                if (stack.Count > 0) {
+                    currNode = stack.Pop();
+                    Console.WriteLine($"{currNode.value}");
+                    if (currNode.right == null)
+                        Console.WriteLine("N");
+                    currNode = currNode.right;
+                }
+            } while (currNode != null || stack.Count > 0);
+        }
+
+        static public void iteratePostBinTree(Node treeNode) {
+            Stack<Node> stack = new Stack<Node>();
+            Node currNode = null;
+            Node prevNode = null;
+
+            if (treeNode != null)
+                currNode = treeNode;
+
+            do {
+                while (currNode != null) {
+                    stack.Push(currNode);
+                    if (currNode.left == null)
+                        Console.WriteLine("N");
+                    currNode = currNode.left;
+                }
+
+                if (stack.Count > 0) {
+                    currNode = stack.Pop();
+                    if (currNode.right == null || currNode.right == prevNode) {
+                        if (currNode.right == null)
+                            Console.WriteLine("N");
+                        Console.WriteLine($"{currNode.value}");
+                        prevNode = currNode;
+                        currNode = null;
+                    }
+                    else {
+                        stack.Push(currNode);
+                        currNode = currNode.right;
+                    }
+                }
+            } while (currNode != null || stack.Count > 0);
+        }
+
+        static public void iteratePreBinTree(Node treeNode) {
+            Stack<Node> stack = new Stack<Node>();
+            Node currNode = null;
+
+            if (treeNode != null)
+                currNode = treeNode;
+
+            do {
+                while (currNode != null) {
+                    stack.Push(currNode);
+                    Console.WriteLine($"{currNode.value}");
+                    if (currNode.left == null)
+                        Console.WriteLine("N");
+                    currNode = currNode.left;
+                }
+
+                if (stack.Count > 0) {
+                    currNode = stack.Pop();
+                    if (currNode.right == null)
+                        Console.WriteLine("N");
+                    currNode = currNode.right;
+                }
+            } while (currNode != null || stack.Count > 0);
+        }
+
+        static public void recurseBinTree(Node treeNode, string order) {
             if (treeNode != null) {
-                Console.WriteLine($"{treeNode.value}");
-                printBinTree(treeNode.left);
-                printBinTree(treeNode.right);
+                if (order == "in") {
+                    recurseBinTree(treeNode.left, order);
+                    Console.WriteLine($"{treeNode.value}");
+                    recurseBinTree(treeNode.right, order);
+                }
+                else if (order == "post") {
+                    recurseBinTree(treeNode.left, order);
+                    recurseBinTree(treeNode.right, order);
+                    Console.WriteLine($"{treeNode.value}");
+                }
+                else if (order == "pre") {
+                    Console.WriteLine($"{treeNode.value}");
+                    recurseBinTree(treeNode.left, order);
+                    recurseBinTree(treeNode.right, order);
+                }
             }
             else {      // treeNode == null
                 Console.WriteLine("N");
@@ -161,30 +257,24 @@ namespace binsearchtree
                     }
                 }
                 else {      // delete root node
+                    Node replaceNode = null;
                     if (rootNode.left != null) {
-                        Node replaceNodeL = findMaxNode(rootNode.left);
-                        replaceNodeL.left = rootNode.left;
-                        replaceNodeL.right = rootNode.right;
-                        if (replaceNodeL.value == rootNode.left.value) {
-                            replaceNodeL.left = null;
+                        replaceNode = findMaxNode(rootNode.left);
+                        if (replaceNode.value != rootNode.left.value) {
+                            findParentNode(rootNode.left, replaceNode.value).right = null;
+                            replaceNode.left = rootNode.left;
                         }
-                        else {
-                            findParentNode(rootNode.left, replaceNodeL.value).right = null;
-                        }
-                        return replaceNodeL;
+                        replaceNode.right = rootNode.right;
                     }
                     else if (rootNode.right != null) {
-                        Node replaceNodeR = findMaxNode(rootNode.right);
-                        replaceNodeR.left = rootNode.left;
-                        replaceNodeR.right = rootNode.right;
-                        if (replaceNodeR.value == rootNode.right.value) {
-                            replaceNodeR.right = null;
+                        replaceNode = findMaxNode(rootNode.right);
+                        if (replaceNode.value != rootNode.right.value) {
+                            findParentNode(rootNode.right, replaceNode.value).left = null;
+                            replaceNode.right = rootNode.right;
                         }
-                        else {
-                            findParentNode(rootNode.right, replaceNodeR.value).left = null;
-                        }
-                        return replaceNodeR;
+                        replaceNode.left = rootNode.left;
                     }
+                    return replaceNode;
                 }
             }
 

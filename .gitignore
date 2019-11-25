@@ -18,3 +18,4 @@ obj/Debug/netcoreapp2.0/binseatreecs.csproj.FileListAbsolute.txt
 obj/Debug/netcoreapp2.0/binseatreecs.csprojAssemblyReference.cache
 obj/Debug/netcoreapp2.0/project.razor.json
 obj/Debug/netcoreapp2.0/binseatreecs.assets.cache
+obj/binseatreecs.csproj.nuget.dgspec.json
