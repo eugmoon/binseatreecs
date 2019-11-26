@@ -72,7 +72,7 @@ namespace binsearchtree
 
             Node testTree = deserialize(testList);
             Console.WriteLine("\nOutput binary search tree: testTree");
-            recurseBinTree(root, order);
+            recurseBinTree(testTree, order);
             Console.WriteLine("Done!\n");
         }
 
@@ -389,6 +389,34 @@ namespace binsearchtree
             }
 
             return serialList;
+            /*
+            Queue<string> serialQueue = new Queue<string>();
+            Stack<Node> nodeStack = new Stack<Node>();
+            Node currNode = null;
+
+            if (treeNode != null) {
+                currNode = treeNode;
+            }
+
+            while (currNode != null || nodeStack.Count > 0) {
+                while (currNode != null) {
+                    nodeStack.Push(currNode);
+                    serialQueue.Enqueue(currNode.value.ToString());
+                    if (currNode.left == null)
+                        serialQueue.Enqueue("N");
+                    currNode = currNode.left;
+                }
+
+                if (nodeStack.Count > 0) {
+                    currNode = nodeStack.Pop();
+                    if (currNode.right == null)
+                        serialQueue.Enqueue("N");
+                    currNode = currNode.right;
+                }
+            }
+
+            return serialQueue.ToList();
+            */
         }
 
         static public Node deserialize(List<string> treeList) {
@@ -411,6 +439,59 @@ namespace binsearchtree
             }
             
             return tempNode;
+            /*
+            Queue<string> treeQueue = new Queue<string>();
+            Node rootNode = null;
+            Stack<Node> nodeStack = new Stack<Node>();
+            bool isLeft = true;
+
+            foreach (string value in treeList) {
+                treeQueue.Enqueue(value);
+            }
+
+            while (treeQueue.Count > 0) {
+                Node tempNode = new Node();
+                if (isLeft) {
+                    while (treeQueue.Peek() != "N") {
+                        if (nodeStack.Count == 0) {
+                            rootNode = new Node(Convert.ToInt16(treeQueue.Dequeue()));
+                            nodeStack.Push(rootNode);
+                        }
+                        else {
+                            Node prevNode = nodeStack.Pop();
+                            Node leftNode = new Node(Convert.ToInt16(treeQueue.Dequeue()));
+                            prevNode.left = leftNode;
+                            nodeStack.Push(prevNode);
+                            nodeStack.Push(leftNode);
+                        }
+                    }
+                    if (nodeStack.Count == 0)
+                        return rootNode;
+                    tempNode = nodeStack.Pop();
+                    tempNode.left = null;
+                    nodeStack.Push(tempNode);
+                    treeQueue.Dequeue();
+                    isLeft = false;
+                }
+                else {
+                    if (nodeStack.Count > 0) {
+                        tempNode = nodeStack.Pop();
+                        tempNode.right = null;
+                        if (treeQueue.Peek() != "N") {
+                            Node rightNode = new Node();
+                            rightNode.value = Convert.ToInt16(treeQueue.Dequeue());
+                            tempNode.right = rightNode;
+                            nodeStack.Push(rightNode);
+                            isLeft = true;
+                        }
+                        else
+                            treeQueue.Dequeue();
+                    }
+                }
+            }
+            
+            return rootNode;
+            */
         }
 
         static public void printTreeList(List<string> treeList) {
